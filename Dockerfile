@@ -1,35 +1,38 @@
-FROM php:8.3-fpm
+FROM php:8.3
 
-# Arguments defined in docker-compose.yml
 ARG user
 ARG uid
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
     git \
     curl \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
-    unzip \
-    libzip-dev \
-    -y mariadb-client
+    netcat-openbsd \
+    && apt clean && rm -rf /var/lib/apt/lists/*
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt install -y nodejs
 
-# Install PHP extensions
-RUN docker-php-ext-install zip mysqli pdo_mysql mbstring exif pcntl bcmath gd && docker-php-ext-enable mysqli
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
-
-# Set working directory
 WORKDIR /var/www
 
+COPY . .
+
+RUN npm install
+RUN npm run build
+
+EXPOSE 8000
+
 USER $user
+COPY Docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+# WORKDIR /var/www
+# CMD ["cd /var/www && php artisan serve" , "--host=0.0.0.0", "--port=8000"]
+

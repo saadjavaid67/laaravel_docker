@@ -1,0 +1,15 @@
+                                                            INSTRUCTIONS
+
+Step 01: Download Docker on your system
+
+Step:02 On VS Code Run the command "docker-compose up --build" the process may take some time
+
+Step:03 go to docker desktop, on the sidebae go to containers and there will be some port for the localhost click on the mysql and your app port it will go to that port of local host
+
+Step:04 A new database will be created related to the app name but if you need to import a database go to phpmyadmin and you can import your database
+
+Step:05 Don't change Dockerfile, Dockerignore, and Docker/entrypoint.sh as it may shift you to old way
+
+Step:06 Ensure that if you have env file so copy its content and paste it in the env.example file the first time
+
+Step:07 All done you are now ready for your development

@@ -1,0 +1,13 @@
+
+.git /
+
+# .env
+
+# vendor /
+
+# composer.json /
+# age.json /
+
+node_modules /
+
+pack

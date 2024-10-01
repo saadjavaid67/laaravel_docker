@@ -52,7 +52,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'food_type' => ['required', 'string', 'in:Wholesalers,Distributors,Food Manf.'],
+            // 'food_type' => ['required', 'string', 'in:Wholesalers,Distributors,Food Manf.'],
         ]);
     }
 
@@ -69,7 +69,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'number' => $data['number'],
             'password' => Hash::make($data['password']),
-            'food_type' => $data['food_type'],
+            // 'food_type' => $data['food_type'],
         ]);
     }
 }
