@@ -4,21 +4,19 @@ echo "Waiting for MySQL to be available..."
 while ! nc -z db 3306; do
     sleep 1
 done
+    cd /var/www/html
 
 if [ ! -f "vendor/autoload.php" ]; then
-    composer install --no-progress --no-interaction
+    composer install --no-interaction
 fi
 
-if [ ! -f ".env" ]; then
-    echo "Creating env file for env $APP_ENV"
-    cp .env.example .env
-else
-    echo "env file exists."
+if [ ! -d "node_modules" ]; then
+    echo "Running npm install..."
+    npm install
+    npm run dev &
 fi
 
 role=${CONTAINER_ROLE:-app}
-
-cd /var/www
 
 if [ "$role" = "app" ]; then
     php artisan migrate --force

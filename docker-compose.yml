@@ -10,71 +10,77 @@ services:
                 FRANKENPHP_VERSION: latest
                 COMPOSER_VERSION: latest
         environment:
-            APP_NAME: ${APP_NAME}
-            APP_ENV: ${APP_ENV}
-            APP_KEY: ${APP_KEY}
-            APP_DEBUG: ${APP_DEBUG}
-            APP_TIMEZONE: ${APP_TIMEZONE}
-            APP_URL: ${APP_URL}
-            APP_LOCALE: ${APP_LOCALE}
-            APP_FALLBACK_LOCALE: ${APP_FALLBACK_LOCALE}
-            APP_FAKER_LOCALE: ${APP_FAKER_LOCALE}
-            APP_MAINTENANCE_DRIVER: ${APP_MAINTENANCE_DRIVER}
-            BCRYPT_ROUNDS: ${BCRYPT_ROUNDS}
-            LOG_CHANNEL: ${LOG_CHANNEL}
-            LOG_STACK: ${LOG_STACK}
-            LOG_DEPRECATIONS_CHANNEL: ${LOG_DEPRECATIONS_CHANNEL}
-            LOG_LEVEL: ${LOG_LEVEL}
-            DB_CONNECTION: ${DB_CONNECTION}
-            DB_HOST: ${DB_HOST}
-            DB_PORT: ${DB_PORT}
-            DB_DATABASE: ${DB_DATABASE}
-            DB_USERNAME: ${DB_USERNAME}
-            DB_PASSWORD: ${DB_PASSWORD}
-            SESSION_DRIVER: ${SESSION_DRIVER}
-            SESSION_LIFETIME: ${SESSION_LIFETIME}
-            SESSION_ENCRYPT: ${SESSION_ENCRYPT}
-            SESSION_PATH: ${SESSION_PATH}
-            SESSION_DOMAIN: ${SESSION_DOMAIN}
-            BROADCAST_CONNECTION: ${BROADCAST_CONNECTION}
-            FILESYSTEM_DISK: ${FILESYSTEM_DISK}
-            QUEUE_CONNECTION: ${QUEUE_CONNECTION}
-            CACHE_STORE: ${CACHE_STORE}
-            CACHE_PREFIX: ""
-            MEMCACHED_HOST: ${MEMCACHED_HOST}
-            REDIS_CLIENT: ${REDIS_CLIENT}
-            REDIS_HOST: ${REDIS_HOST}
-            REDIS_PASSWORD: ${REDIS_PASSWORD}
-            REDIS_PORT: ${REDIS_PORT}
-            MAIL_MAILER: ${MAIL_MAILER}
-            MAIL_HOST: ${MAIL_HOST}
-            MAIL_PORT: ${MAIL_PORT}
-            MAIL_USERNAME: ${MAIL_USERNAME}
-            MAIL_PASSWORD: ${MAIL_PASSWORD}
-            MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
-            MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
-            MAIL_FROM_NAME: "${APP_NAME}"
-            AWS_ACCESS_KEY_ID: ""
-            AWS_SECRET_ACCESS_KEY: ""
-            AWS_DEFAULT_REGION: us-east-1
-            AWS_BUCKET: ""
-            AWS_USE_PATH_STYLE_ENDPOINT: false
-            VITE_APP_NAME: "${APP_NAME}"
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+            IGNITION_LOCAL_SITES_PATH: '${PWD}'
+        # environment:
+        #     APP_NAME: ${APP_NAME}
+        #     APP_ENV: ${APP_ENV}
+        #     APP_KEY: ${APP_KEY}
+        #     APP_DEBUG: ${APP_DEBUG}
+        #     APP_TIMEZONE: ${APP_TIMEZONE}
+        #     APP_URL: ${APP_URL}
+        #     APP_LOCALE: ${APP_LOCALE}
+        #     APP_FALLBACK_LOCALE: ${APP_FALLBACK_LOCALE}
+        #     APP_FAKER_LOCALE: ${APP_FAKER_LOCALE}
+        #     APP_MAINTENANCE_DRIVER: ${APP_MAINTENANCE_DRIVER}
+        #     BCRYPT_ROUNDS: ${BCRYPT_ROUNDS}
+        #     LOG_CHANNEL: ${LOG_CHANNEL}
+        #     LOG_STACK: ${LOG_STACK}
+        #     LOG_DEPRECATIONS_CHANNEL: ${LOG_DEPRECATIONS_CHANNEL}
+        #     LOG_LEVEL: ${LOG_LEVEL}
+        #     DB_CONNECTION: ${DB_CONNECTION}
+        #     DB_HOST: ${DB_HOST}
+        #     DB_PORT: ${DB_PORT}
+        #     DB_DATABASE: ${DB_DATABASE}
+        #     DB_USERNAME: ${DB_USERNAME}
+        #     DB_PASSWORD: ${DB_PASSWORD}
+        #     SESSION_DRIVER: ${SESSION_DRIVER}
+        #     SESSION_LIFETIME: ${SESSION_LIFETIME}
+        #     SESSION_ENCRYPT: ${SESSION_ENCRYPT}
+        #     SESSION_PATH: ${SESSION_PATH}
+        #     SESSION_DOMAIN: ${SESSION_DOMAIN}
+        #     BROADCAST_CONNECTION: ${BROADCAST_CONNECTION}
+        #     FILESYSTEM_DISK: ${FILESYSTEM_DISK}
+        #     QUEUE_CONNECTION: ${QUEUE_CONNECTION}
+        #     CACHE_STORE: ${CACHE_STORE}
+        #     CACHE_PREFIX: ""
+        #     MEMCACHED_HOST: ${MEMCACHED_HOST}
+        #     REDIS_CLIENT: ${REDIS_CLIENT}
+        #     REDIS_HOST: ${REDIS_HOST}
+        #     REDIS_PASSWORD: ${REDIS_PASSWORD}
+        #     REDIS_PORT: ${REDIS_PORT}
+        #     MAIL_MAILER: ${MAIL_MAILER}
+        #     MAIL_HOST: ${MAIL_HOST}
+        #     MAIL_PORT: ${MAIL_PORT}
+        #     MAIL_USERNAME: ${MAIL_USERNAME}
+        #     MAIL_PASSWORD: ${MAIL_PASSWORD}
+        #     MAIL_ENCRYPTION: ${MAIL_ENCRYPTION}
+        #     MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS}
+        #     MAIL_FROM_NAME: "${APP_NAME}"
+        #     AWS_ACCESS_KEY_ID: ""
+        #     AWS_SECRET_ACCESS_KEY: ""
+        #     AWS_DEFAULT_REGION: us-east-1
+        #     AWS_BUCKET: ""
+        #     AWS_USE_PATH_STYLE_ENDPOINT: false
+        #     VITE_APP_NAME: "${APP_NAME}"
         volumes:
             - .:/var/www/html
-            - ./storage:/var/www/html/storage
-            - ./bootstrap/cache:/var/www/html/bootstrap/cache
-        develop:
-            watch:
-                - action: sync
-                  path: ./
-                  target: /var/www/html
-                  ignore:
-                      - node_modules/
-                      - vendor/
-                - action: sync+restart
-                  path: composer-*.json
-                  target: /var/www/html/composer-*.json
+            # - ./storage:/var/www/html/storage
+            # - ./bootstrap/cache:/var/www/html/bootstrap/cache
+        # develop:
+        #     watch:
+        #         - action: sync
+        #           path: ./
+        #           target: /var/www/html
+        #           ignore:
+        #               - node_modules/
+        #               - vendor/
+        #         - action: sync+restart
+        #           path: composer-*.json
+        #           target: /var/www/html/composer-*.json
         ports:
             - "8000:8000"
         depends_on:
